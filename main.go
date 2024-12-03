@@ -10,11 +10,14 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/pohnpimonl/api_clone_shopee/db"
 	"github.com/pohnpimonl/api_clone_shopee/routes"
 )
 
 func main() {
-	router := routes.Router()
+
+	dbCon := db.NewDatabasePool()
+	router := routes.Router(dbCon)
 
 	srv := &http.Server{
 		Addr:    ":8080",
@@ -31,7 +34,7 @@ func main() {
 
 	// Wait for interrupt signal to gracefully shutdown the server with
 	// a timeout of 5 seconds.
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	// kill (no param) default send syscall.SIGTERM
 	// kill -2 is syscall.SIGINT
 	// kill -9 is syscall.SIGKILL but can't be caught, so don't need to add it

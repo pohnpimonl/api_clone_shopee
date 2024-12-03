@@ -4,13 +4,24 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func ListProducts(ctx *gin.Context) {
+type ProductAPI struct {
+	db *pgxpool.Pool
+}
+
+func NewProductAPI(db *pgxpool.Pool) *ProductAPI {
+	return &ProductAPI{
+		db: db,
+	}
+}
+
+func (h *ProductAPI) ListProducts(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"message": "List Product"})
 }
 
-func GetProducts(ctx *gin.Context) {
+func (h *ProductAPI) GetProducts(ctx *gin.Context) {
 	var req ProductGetReq
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
