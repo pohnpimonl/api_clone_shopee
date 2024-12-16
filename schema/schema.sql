@@ -23,3 +23,13 @@ CREATE TABLE category (
     updated_by VARCHAR(255) NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+SELECT id,name,description,price
+FROM product
+ORDER BY created_at;
+
+SELECT *
+FROM category;
+
+INSERT INTO product (id,name,description,price,created_by,updated_by)
+VALUES ($1, $2, $3, $4, $5, $6);

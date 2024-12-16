@@ -13,6 +13,7 @@ func Router(db *pgxpool.Pool) *gin.Engine {
 	v1 := router.Group("/v1")
 	v1.POST("/products.lists", productAPI.ListProducts)
 	v1.POST("/products.get", productAPI.GetProducts)
+	v1.POST("/products.create", productAPI.CreateProduct)
 
 	return router
 }
